@@ -1,6 +1,6 @@
 {
   "titre": "Votre garage à Noisy-le-Sec",
-  "intro": "Agent Renault et garage multimarque, nous entretenons, réparons et vendons des véhicules au 17-21 boulevard Gambetta.",
+  "intro": "Agent Renault et garage multimarque, nous entretenons et réparons les véhicules de toutes marques, et vendons des véhicules neufs et d'occasion, au 17-21 boulevard Gambetta.",
   "chiffres": [
     {
       "valeur": "2013",
@@ -11,8 +11,8 @@
       "libelle": ""
     },
     {
-      "valeur": "Toutes marques",
-      "libelle": "entretenues"
+      "valeur": "Multimarque",
+      "libelle": "Toutes marques entretenues et réparées"
     }
   ],
   "histoire": "Le texte de présentation du garage sera ajouté ici : son histoire, son équipe et ce qui vous distingue.",
@@ -22,7 +22,10 @@
     "Un interlocuteur unique pour votre véhicule"
   ],
   "photos": [
-    "photos/site/garage-1.jpg",
-    "photos/site/garage-2.jpg"
+    "photos/site/garage-eem-1.jpg",
+    "photos/site/garage-eem-6.jpg",
+    "photos/site/garage-eem-4.jpg",
+    "photos/site/garage-eem-2.jpg",
+    "photos/site/garage-eem-5.jpg"
   ]
 }
