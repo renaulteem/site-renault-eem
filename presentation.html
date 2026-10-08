@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=34">
+  <link rel="stylesheet" href="assets/style.css?v=35">
 </head>
 <body data-page="apropos">
   <div id="site-header"></div>
@@ -25,36 +25,33 @@
     </div>
   </section>
 
-  <!-- Photo de couverture + chiffres clés -->
+  <!-- Façade + chiffres clés -->
   <section class="ab-cover-wrap">
     <div class="container">
-      <div class="ab-show reveal" id="a-slides" aria-roledescription="diaporama" aria-label="Photos du garage">
-        <div class="ab-show-media" id="a-track"></div>
-        <div class="ab-show-panel">
-          <span class="ab-show-count" id="a-count"></span>
-          <div class="ab-show-caption" id="a-caption" aria-live="polite"></div>
-          <div class="ab-show-ctrl">
-            <button class="ab-sl-nav" id="a-prev" aria-label="Photo précédente">‹</button>
-            <button class="ab-sl-nav" id="a-next" aria-label="Photo suivante">›</button>
-            <div class="ab-show-bar"><span id="a-bar"></span></div>
-          </div>
-        </div>
-      </div>
+      <div class="ab-rows" id="a-first"></div>
       <div class="ab-facts reveal" id="a-chiffres"></div>
     </div>
   </section>
 
-  <!-- Histoire + photo -->
+  <!-- Histoire -->
   <section class="section ab-story-wrap">
     <div class="container ab-story">
       <div class="ab-story-text reveal">
         <span class="eyebrow">Notre histoire</span>
         <h2>Une équipe expérimentée, le savoir-faire Renault.</h2>
         <div id="a-histoire"></div>
+      </div>
+      <div class="ab-story-side reveal">
         <ol class="ab-values" id="a-valeurs"></ol>
         <a class="btn btn-yellow" data-tel href="#">Nous appeler · <span data-num></span></a>
       </div>
-      <figure class="ab-story-photo reveal" id="a-photo2"></figure>
+    </div>
+  </section>
+
+  <!-- Le garage en images, au fil de la page -->
+  <section class="section tight" id="a-rows-wrap">
+    <div class="container">
+      <div class="ab-rows" id="a-rows"></div>
     </div>
   </section>
 
@@ -82,39 +79,22 @@
     $("a-titre").textContent = A.titre || "Présentation";
     $("a-intro").textContent = A.intro || "";
 
-    // diaporama : photo entière à gauche, légende à droite
-    const track = $("a-track");
+    // photos au fil de la page : photo entière + légende, en alternance gauche / droite
     const items = photos.map((p) => (typeof p === "string" ? { photo: p } : p));
     const src = (i) => items[i] && items[i].photo;
-    if (!items.length) $("a-slides").remove();
-    else {
-      track.innerHTML = items.map((it, i) => `<img class="ab-show-img${i ? "" : " on"}" src="${esc(it.photo)}" alt="${esc(it.titre || "Renault Gambetta")}" data-i="${i}">`).join("");
-      const imgs = [...track.children];
-      let cur = 0, timer;
-      const pad = (n) => String(n).padStart(2, "0");
-      const render = () => {
-        const it = items[cur];
-        $("a-count").textContent = `${pad(cur + 1)} / ${pad(items.length)}`;
-        $("a-caption").classList.remove("in");
-        setTimeout(() => {
-          $("a-caption").innerHTML = `${it.titre ? `<h3>${esc(it.titre)}</h3>` : ""}${it.texte ? `<p>${esc(it.texte)}</p>` : ""}`;
-          $("a-caption").classList.add("in");
-        }, 150);
-        const bar = $("a-bar"); bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
-      };
-      const go = (i) => { imgs[cur].classList.remove("on"); cur = (i + imgs.length) % imgs.length; imgs[cur].classList.add("on"); render(); };
-      const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const auto = () => { clearInterval(timer); if (!calm) timer = setInterval(() => go(cur + 1), 6000); };
-      $("a-prev").onclick = () => { go(cur - 1); auto(); };
-      $("a-next").onclick = () => { go(cur + 1); auto(); };
-      $("a-slides").addEventListener("mouseenter", () => { clearInterval(timer); $("a-slides").classList.add("paused"); });
-      $("a-slides").addEventListener("mouseleave", () => { $("a-slides").classList.remove("paused"); auto(); });
-      let x0 = null;
-      track.addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
-      track.addEventListener("touchend", (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) { go(cur + (dx < 0 ? 1 : -1)); auto(); } x0 = null; });
-      if (items.length < 2) $("a-slides").querySelector(".ab-show-ctrl").remove();
-      render(); auto();
-    }
+    const pad = (n) => String(n).padStart(2, "0");
+    const row = (it, i, n = i) => `
+      <article class="ab-row reveal">
+        <figure class="ab-row-photo"><img src="${esc(it.photo)}" alt="${esc(it.titre || "Renault Gambetta")}" data-i="${i}" ${i > 1 ? 'loading="lazy"' : ""}></figure>
+        <div class="ab-row-text">
+          <span class="ab-row-num">${pad(n)}</span>
+          ${it.titre ? `<h3>${esc(it.titre)}</h3>` : ""}
+          ${it.texte ? `<p>${esc(it.texte)}</p>` : ""}
+        </div>
+      </article>`;
+    if (items[0]) $("a-first").innerHTML = row(items[0], 0); else $("a-first").remove();
+    if (items.length > 1) $("a-rows").innerHTML = items.slice(1).map((it, k) => row(it, k + 1, k + 1)).join("");
+    else $("a-rows-wrap").remove();
 
     // chiffres clés : libellé au-dessus, valeur en grand
     $("a-chiffres").innerHTML = (A.chiffres || []).map((c) => `
@@ -126,8 +106,6 @@
     // histoire
     $("a-histoire").innerHTML = String(A.histoire || "").split(/\n\s*\n/).filter(Boolean).map((p) => `<p>${esc(p).replace(/\n/g, "<br>")}</p>`).join("");
     $("a-valeurs").innerHTML = (A.valeurs || []).map((v) => `<li>${esc(v)}</li>`).join("");
-    if (photos[1]) $("a-photo2").innerHTML = `<img src="${esc(src(1))}" alt="Renault Gambetta" loading="lazy" data-i="1">`;
-    else $("a-photo2").remove();
 
     // apparition au défilement (le contenu est ajouté après le chargement)
     const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))), { threshold: 0.12 });
