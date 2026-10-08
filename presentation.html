@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=27">
+  <link rel="stylesheet" href="assets/style.css?v=29">
 </head>
 <body data-page="apropos">
   <div id="site-header"></div>
@@ -28,7 +28,12 @@
   <!-- Photo de couverture + chiffres clés -->
   <section class="ab-cover-wrap">
     <div class="container">
-      <figure class="ab-cover reveal" id="a-cover"></figure>
+      <div class="ab-slides reveal" id="a-slides" aria-roledescription="diaporama" aria-label="Photos du garage">
+        <div class="ab-slides-track" id="a-track"></div>
+        <button class="ab-sl-nav prev" id="a-prev" aria-label="Photo précédente">‹</button>
+        <button class="ab-sl-nav next" id="a-next" aria-label="Photo suivante">›</button>
+        <div class="ab-sl-dots" id="a-dots"></div>
+      </div>
       <div class="ab-facts reveal" id="a-chiffres"></div>
     </div>
   </section>
@@ -47,14 +52,6 @@
     </div>
   </section>
 
-  <!-- Galerie -->
-  <section class="section tight" id="a-galerie-wrap">
-    <div class="container">
-      <div class="section-head reveal"><h2>En images</h2></div>
-      <div class="ab-mosaic" id="a-galerie"></div>
-    </div>
-  </section>
-
   <!-- Agrandissement des photos -->
   <div class="ab-lightbox" id="a-lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie">
     <button class="ab-lb-close" aria-label="Fermer">×</button>
@@ -65,8 +62,8 @@
 
   <div id="site-footer"></div>
 
-  <script src="assets/config.js?v=27"></script>
-  <script src="assets/main.js?v=27"></script>
+  <script src="assets/config.js?v=29"></script>
+  <script src="assets/main.js?v=29"></script>
   <script>
   (async function () {
     // Contenu modifiable depuis l'espace /admin (fichier data/apropos.json)
@@ -79,9 +76,35 @@
     $("a-titre").textContent = A.titre || "Présentation";
     $("a-intro").textContent = A.intro || "";
 
-    // couverture
-    if (photos[0]) $("a-cover").innerHTML = `<img src="${esc(photos[0])}" alt="Le garage Renault Gambetta à Noisy-le-Sec" data-i="0">`;
-    else $("a-cover").remove();
+    // diaporama : toutes les photos, affichées en entier
+    const track = $("a-track"), dots = $("a-dots");
+    if (!photos.length) $("a-slides").remove();
+    else {
+      track.innerHTML = photos.map((p, i) => `
+        <figure class="ab-slide${i ? "" : " on"}">
+          <img class="bg" src="${esc(p)}" alt="" aria-hidden="true">
+          <img class="fg" src="${esc(p)}" alt="Renault Gambetta" data-i="${i}" ${i ? 'loading="lazy"' : ""}>
+        </figure>`).join("");
+      dots.innerHTML = photos.map((_, i) => `<button aria-label="Photo ${i + 1}" class="${i ? "" : "on"}"></button>`).join("");
+      const slides = [...track.children];
+      let cur = 0, timer;
+      const go = (i) => {
+        slides[cur].classList.remove("on"); dots.children[cur].classList.remove("on");
+        cur = (i + slides.length) % slides.length;
+        slides[cur].classList.add("on"); dots.children[cur].classList.add("on");
+      };
+      const auto = () => { clearInterval(timer); if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => go(cur + 1), 5000); };
+      $("a-prev").onclick = () => { go(cur - 1); auto(); };
+      $("a-next").onclick = () => { go(cur + 1); auto(); };
+      [...dots.children].forEach((d, i) => (d.onclick = () => { go(i); auto(); }));
+      if (slides.length < 2) { $("a-prev").remove(); $("a-next").remove(); dots.remove(); }
+      let x0 = null;
+      track.addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
+      track.addEventListener("touchend", (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) { go(cur + (dx < 0 ? 1 : -1)); auto(); } x0 = null; });
+      $("a-slides").addEventListener("mouseenter", () => clearInterval(timer));
+      $("a-slides").addEventListener("mouseleave", auto);
+      auto();
+    }
 
     // chiffres clés : libellé au-dessus, valeur en grand
     $("a-chiffres").innerHTML = (A.chiffres || []).map((c) => `
@@ -95,14 +118,6 @@
     $("a-valeurs").innerHTML = (A.valeurs || []).map((v) => `<li>${esc(v)}</li>`).join("");
     if (photos[1]) $("a-photo2").innerHTML = `<img src="${esc(photos[1])}" alt="Renault Gambetta" loading="lazy" data-i="1">`;
     else $("a-photo2").remove();
-
-    // mosaïque
-    const rest = photos.slice(2);
-    if (!rest.length) $("a-galerie-wrap").remove();
-    else {
-      $("a-galerie").className = "ab-mosaic n" + Math.min(rest.length, 4);
-      $("a-galerie").innerHTML = rest.map((p, k) => `<figure class="ab-tile reveal"><img src="${esc(p)}" alt="Renault Gambetta" loading="lazy" data-i="${k + 2}"></figure>`).join("");
-    }
 
     // apparition au défilement (le contenu est ajouté après le chargement)
     const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))), { threshold: 0.12 });

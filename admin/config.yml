@@ -85,6 +85,6 @@ collections:
             widget: list
             field: { name: valeur, label: Engagement, widget: string }
           - name: photos
-            label: "Photos du garage (la 1re est la grande photo)"
+            label: "Photos du garage (elles défilent en haut de la page ; la 2e est aussi affichée à côté du texte)"
             widget: list
             field: { name: photo, label: Photo, widget: image }
