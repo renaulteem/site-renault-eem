@@ -15,7 +15,8 @@
       "couleur": "Marron",
       "prix": 15990,
       "atouts": [
-        "Apple CarPlay"
+        "Apple CarPlay",
+        "LED d'ambiance"
       ],
       "photos": [
         "photos/vo/clio5-1.jpg",
@@ -63,9 +64,8 @@
       "couleur": "Bleu foncé",
       "prix": 4990,
       "atouts": [
-        "Voiture de collection appréciée",
-        "Bon état général",
-        "Idéale pour passionnés et youngtimer"
+        "Voiture de collection",
+        "Faible kilométrage"
       ],
       "photos": [
         "photos/vo/super5-1.jpg",
@@ -89,7 +89,8 @@
       "couleur": "Gris foncé",
       "prix": 41990,
       "atouts": [
-        "Apple CarPlay"
+        "Apple CarPlay",
+        "LED d'ambiance"
       ],
       "photos": [
         "photos/vo/vclasse-1.jpg",
@@ -116,9 +117,8 @@
       "couleur": "Blanc",
       "prix": 4790,
       "atouts": [
-        "Entretien régulier",
-        "Bon état général",
-        "Prête à rouler"
+        "Faible kilométrage",
+        "Entretien régulier"
       ],
       "photos": [
         "photos/vo/twingo-b-1.jpg",
@@ -144,7 +144,10 @@
       "puissance": "75 ch",
       "couleur": "Jaune",
       "prix": 4790,
-      "atouts": [],
+      "atouts": [
+        "Embrayage changé",
+        "Boîte de vitesses changée"
+      ],
       "photos": [
         "photos/vo/twingo-1.jpg",
         "photos/vo/twingo-2.jpg",
