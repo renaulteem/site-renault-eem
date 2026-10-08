@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=35">
+  <link rel="stylesheet" href="assets/style.css?v=36">
 </head>
 <body data-page="apropos">
   <div id="site-header"></div>
@@ -33,25 +33,40 @@
     </div>
   </section>
 
-  <!-- Histoire -->
+  <!-- Histoire : chaque paragraphe accompagné d'une ou deux photos -->
   <section class="section ab-story-wrap">
-    <div class="container ab-story">
-      <div class="ab-story-text reveal">
+    <div class="container">
+      <div class="ab-story-head reveal">
         <span class="eyebrow">Notre histoire</span>
         <h2>Une équipe expérimentée, le savoir-faire Renault.</h2>
-        <div id="a-histoire"></div>
       </div>
-      <div class="ab-story-side reveal">
-        <ol class="ab-values" id="a-valeurs"></ol>
-        <a class="btn btn-yellow" data-tel href="#">Nous appeler · <span data-num></span></a>
-      </div>
+      <div class="ab-chapters" id="a-chapters"></div>
     </div>
   </section>
 
-  <!-- Le garage en images, au fil de la page -->
-  <section class="section tight" id="a-rows-wrap">
+  <!-- Contact & rendez-vous (identique à l'accueil) -->
+  <section class="section tight" id="contact">
     <div class="container">
-      <div class="ab-rows" id="a-rows"></div>
+      <div class="section-head reveal">
+        <h2>Contact &amp; rendez-vous</h2>
+      </div>
+      <div class="tiles contact reveal">
+        <div class="tile"><div class="tile-body">
+          <span class="eyebrow">Téléphone</span>
+          <a class="big-tel" data-tel href="#"><span data-num></span></a>
+          <a class="link-arrow" href="#" id="mail"></a>
+          <div class="note">Pour joindre notre <strong>commercial</strong> (véhicules neufs et occasions), appelez ce même numéro.</div>
+          <a class="btn btn-yellow" data-tel href="#" style="margin-top:22px;align-self:flex-start">Appeler maintenant</a>
+        </div></div>
+        <div class="tile"><div class="tile-body">
+          <span class="eyebrow">Horaires</span>
+          <table id="horaires"></table>
+          <span class="eyebrow">Adresse</span>
+          <address><strong>Renault Gambetta</strong><br><span data-text="adresse"></span><br><span data-text="ville"></span></address>
+          <a class="link-arrow" data-href="lienMaps" data-arrow href="#" target="_blank" rel="noopener">Itinéraire</a>
+        </div></div>
+        <div class="tile map"><iframe id="map" title="Plan d'accès Renault Gambetta" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      </div>
     </div>
   </section>
 
@@ -79,22 +94,42 @@
     $("a-titre").textContent = A.titre || "Présentation";
     $("a-intro").textContent = A.intro || "";
 
-    // photos au fil de la page : photo entière + légende, en alternance gauche / droite
+    // façade en grand, puis les autres photos réparties à côté des paragraphes (par 2)
     const items = photos.map((p) => (typeof p === "string" ? { photo: p } : p));
     const src = (i) => items[i] && items[i].photo;
-    const pad = (n) => String(n).padStart(2, "0");
-    const row = (it, i, n = i) => `
-      <article class="ab-row reveal">
-        <figure class="ab-row-photo"><img src="${esc(it.photo)}" alt="${esc(it.titre || "Renault Gambetta")}" data-i="${i}" ${i > 1 ? 'loading="lazy"' : ""}></figure>
-        <div class="ab-row-text">
-          <span class="ab-row-num">${pad(n)}</span>
-          ${it.titre ? `<h3>${esc(it.titre)}</h3>` : ""}
-          ${it.texte ? `<p>${esc(it.texte)}</p>` : ""}
+    if (items[0]) $("a-first").innerHTML = `<figure class="ab-hero-photo reveal"><img src="${esc(items[0].photo)}" alt="${esc(items[0].titre || "Renault Gambetta")}" data-i="0"></figure>`;
+    else $("a-first").remove();
+    const fig = (it, i) => `
+      <figure class="ab-fig">
+        <img src="${esc(it.photo)}" alt="${esc(it.titre || "Renault Gambetta")}" data-i="${i}" loading="lazy">
+        ${it.titre || it.texte ? `<figcaption>${it.titre ? `<strong>${esc(it.titre)}</strong>` : ""}${it.texte ? ` ${esc(it.texte)}` : ""}</figcaption>` : ""}
+      </figure>`;
+    const paras = String(A.histoire || "").split(/\n\s*\n/).filter(Boolean);
+    const rest = items.slice(1).map((it, k) => ({ it, i: k + 1 }));
+    const per = Math.max(1, Math.ceil(rest.length / Math.max(paras.length, 1)));
+    $("a-chapters").innerHTML = paras.map((p, k) => {
+      const group = rest.slice(k * per, k * per + per);
+      const last = k === paras.length - 1;
+      return `
+      <div class="ab-chapter reveal">
+        <div class="ab-chapter-text">
+          <p>${esc(p).replace(/\n/g, "<br>")}</p>
+          ${last ? `<ol class="ab-values">${(A.valeurs || []).map((v) => `<li>${esc(v)}</li>`).join("")}</ol>
+          <a class="btn btn-yellow" href="#contact">Nous contacter</a>` : ""}
         </div>
-      </article>`;
-    if (items[0]) $("a-first").innerHTML = row(items[0], 0); else $("a-first").remove();
-    if (items.length > 1) $("a-rows").innerHTML = items.slice(1).map((it, k) => row(it, k + 1, k + 1)).join("");
-    else $("a-rows-wrap").remove();
+        <div class="ab-chapter-photos">${group.map((g) => fig(g.it, g.i)).join("")}</div>
+      </div>`;
+    }).join("");
+    // les photos d'un même paragraphe prennent la même hauteur, chacune en entier
+    document.querySelectorAll(".ab-fig img").forEach((img) => {
+      const set = () => { if (img.naturalWidth) img.closest(".ab-fig").style.flex = `${img.naturalWidth / img.naturalHeight} 1 0`; };
+      img.complete ? set() : img.addEventListener("load", set);
+    });
+
+    // contact
+    document.getElementById("horaires").innerHTML = SITE.horaires.map(([j, h]) => `<tr><td>${j}</td><td>${h}</td></tr>`).join("");
+    const mail = document.getElementById("mail"); mail.href = "mailto:" + SITE.email; mail.textContent = SITE.email;
+    document.getElementById("map").src = SITE.carteEmbed;
 
     // chiffres clés : libellé au-dessus, valeur en grand
     $("a-chiffres").innerHTML = (A.chiffres || []).map((c) => `
@@ -102,10 +137,6 @@
         <span class="ab-fact-value">${esc(c.valeur)}</span>
         ${c.libelle ? `<span class="ab-fact-label">${esc(c.libelle)}</span>` : ""}
       </div>`).join("");
-
-    // histoire
-    $("a-histoire").innerHTML = String(A.histoire || "").split(/\n\s*\n/).filter(Boolean).map((p) => `<p>${esc(p).replace(/\n/g, "<br>")}</p>`).join("");
-    $("a-valeurs").innerHTML = (A.valeurs || []).map((v) => `<li>${esc(v)}</li>`).join("");
 
     // apparition au défilement (le contenu est ajouté après le chargement)
     const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))), { threshold: 0.12 });

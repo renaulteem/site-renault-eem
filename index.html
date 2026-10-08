@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=35">
+  <link rel="stylesheet" href="assets/style.css?v=36">
 </head>
 <body data-page="home">
   <div id="site-header"></div>
@@ -118,6 +118,22 @@
           </div>
         </article>
 
+        <article class="tile reveal" id="vente">
+          <div class="tile-img"><img src="photos/vo/clio5-1-vignette.jpg" alt="Véhicule d'occasion devant l'agence Renault Gambetta" loading="lazy"></div>
+          <div class="tile-body">
+            <h3>Vente de véhicules</h3>
+            <p>Véhicules neufs Renault et Dacia, et véhicules d'occasion toutes marques.</p>
+            <ul>
+              <li>Occasions contrôlées par l'atelier</li>
+              <li>Gamme neuve Renault et Dacia</li>
+              <li>Reprise de votre véhicule</li>
+              <li>Essai sur rendez-vous</li>
+            </ul>
+            <a class="btn btn-yellow tile-btn" href="vo.html">Voir nos occasions</a>
+            <a class="tile-call" data-href="lienRenault" href="#" target="_blank" rel="noopener">ou découvrir la gamme neuve ↗</a>
+          </div>
+        </article>
+
         <a class="tile myr reveal" data-href="lienMyRenault" href="#" target="_blank" rel="noopener">
           <div class="tile-body">
             <span class="eyebrow">Espace client Renault</span>
@@ -205,9 +221,9 @@
 
   <div id="site-footer"></div>
 
-  <script src="assets/config.js?v=35"></script>
-  <script src="assets/main.js?v=35"></script>
-  <script src="assets/hero3d.js?v=35"></script>
+  <script src="assets/config.js?v=36"></script>
+  <script src="assets/main.js?v=36"></script>
+  <script src="assets/hero3d.js?v=36"></script>
   <script>
     document.getElementById("horaires").innerHTML = SITE.horaires.map(([j, h]) => `<tr><td>${j}</td><td>${h}</td></tr>`).join("");
     const mail = document.getElementById("mail"); mail.href = "mailto:" + SITE.email; mail.textContent = SITE.email;
