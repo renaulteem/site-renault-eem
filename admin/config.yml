@@ -5,7 +5,7 @@ backend:
   repo: renaulteem/site-renault-eem
   branch: main
 
-site_url: https://renaultgambetta.fr
+site_url: https://renaultgambetta.com
 logo_url: /photos/site/logo-renault.svg
 
 # Où sont rangées les photos envoyées depuis l'admin
