@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demande de devis – Renault EEM, Noisy-le-Sec</title>
+  <meta name="description" content="Demandez un devis à Renault EEM : carrosserie, peinture, mécanique. Joignez votre carte grise et recevez votre devis par e-mail.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=21">
+</head>
+<body data-page="devis">
+  <div id="site-header"></div>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">Accueil</a> / Demande de devis</div>
+      <span class="eyebrow">Devis gratuit · Réponse par e-mail</span>
+      <h1>Demande de devis</h1>
+      <p>Pour un devis juste, nous avons besoin de la <strong style="color:#000">copie de votre carte grise</strong>, de la plaque, du kilométrage et d'une description aussi précise que possible. Les photos des dégâts nous aident beaucoup.</p>
+      <div class="cg-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 21h20z"/><path d="M12 10v5M12 18v.01"/></svg><p><strong>Important :</strong> toute demande de devis reçue sans copie de la carte grise ne pourra pas être prise en considération.</p></div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container">
+      <form class="rdv-layout" id="form" novalidate>
+        <div>
+          <!-- 1. Travaux -->
+          <div class="step">
+            <div class="step-head"><span class="step-num">1</span><h2>Type de travaux</h2></div>
+            <div class="ops" id="ops"></div>
+            <div class="ins-choice" id="ins">
+              <label><input type="radio" name="assurance" value="Avec assurance"> Avec assurance</label>
+              <label><input type="radio" name="assurance" value="Sans assurance"> Sans assurance</label>
+              <label><input type="radio" name="assurance" value="Je ne sais pas encore"> Je ne sais pas encore</label>
+            </div>
+          </div>
+
+          <!-- 2. Véhicule -->
+          <div class="step">
+            <div class="step-head"><span class="step-num">2</span><h2>Votre véhicule</h2></div>
+            <div class="grid2">
+              <div class="f"><label for="plaque">Immatriculation *</label><input id="plaque" name="plaque" class="plate" placeholder="AB-123-CD" maxlength="10" autocomplete="off"></div>
+              <div class="f"><label for="km">Kilométrage *</label><input id="km" name="km" inputmode="numeric" placeholder="ex : 45 000"></div>
+              <div class="f"><label for="marque">Marque *</label>
+                <select id="marque" name="marque"><option value="">Choisir…</option><option>Renault</option><option>Dacia</option><option>Alpine</option><option>Autre marque</option></select></div>
+              <div class="f"><label for="modele">Modèle *</label><input id="modele" name="modele" placeholder="ex : Clio V, Captur, Sandero…"></div>
+              <div class="f full" id="cg-field"><label>Copie de la carte grise * <em>(photo lisible ou PDF)</em></label>
+                <label class="upload" id="cg-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v4h16v-4"/></svg><div class="txt"><strong id="cg-name">Ajouter la carte grise</strong><span>JPG, PNG ou PDF · 10 Mo max.</span></div><input type="file" id="cg" accept="image/*,.pdf"></label></div>
+            </div>
+          </div>
+
+          <!-- 3. Description -->
+          <div class="step">
+            <div class="step-head"><span class="step-num">3</span><h2>Description de la demande</h2></div>
+            <div class="f" id="desc-field"><label for="desc">Décrivez le plus précisément possible *</label>
+              <textarea id="desc" rows="6" placeholder="Ex : choc à l'arrière gauche, pare-chocs fendu et feu cassé, rayure sur la portière arrière… / Bruit au freinage côté avant droit depuis 2 semaines…"></textarea>
+              <div class="counter" id="counter"></div></div>
+            <div class="f" style="margin-top:16px"><label>Photos <em>(facultatif, jusqu'à 5 — vivement conseillé pour la carrosserie)</em></label>
+              <label class="upload" id="ph-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="14"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg><div class="txt"><strong id="ph-name">Ajouter des photos</strong><span>Vue d'ensemble + gros plans des dégâts</span></div><input type="file" id="photos" accept="image/*" multiple></label></div>
+          </div>
+
+          <!-- 4. Coordonnées -->
+          <div class="step">
+            <div class="step-head"><span class="step-num">4</span><h2>Vos coordonnées</h2></div>
+            <div class="grid2">
+              <div class="f"><label for="nom">Nom *</label><input id="nom" autocomplete="family-name"></div>
+              <div class="f"><label for="prenom">Prénom</label><input id="prenom" autocomplete="given-name"></div>
+              <div class="f"><label for="email">E-mail * <em>(pour recevoir le devis)</em></label><input id="email" type="email" autocomplete="email"></div>
+              <div class="f"><label for="tel">Téléphone *</label><input id="tel" type="tel" autocomplete="tel" placeholder="06 12 34 56 78"></div>
+              <div class="full"><label class="check"><input type="checkbox" id="rgpd"> J'accepte que Renault EEM utilise ces informations et ces documents pour établir mon devis et me recontacter. *</label></div>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="recap" id="recap-box">
+            <div class="recap-head"><h3>Votre demande</h3></div>
+            <dl id="recap"></dl>
+            <div class="foot">
+              <div class="form-error" id="err"></div>
+              <div class="lock" id="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Ajoutez la carte grise pour pouvoir envoyer.</div>
+              <button class="btn btn-black" type="submit" id="send" disabled>Envoyer ma demande de devis</button>
+              <p class="alt">Devis gratuit et sans engagement.<br>Une question ? <a data-tel href="#"><span data-num></span></a></p>
+            </div>
+          </div>
+          <div class="done" id="done">
+            <div class="big"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m5 12 5 5 9-10"/></svg></div>
+            <h2 id="done-title">Demande envoyée</h2>
+            <p id="done-text"></p>
+            <a class="btn btn-yellow" href="index.html" style="margin-top:24px">Retour à l'accueil</a>
+          </div>
+        </aside>
+      </form>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/config.js?v=21"></script>
+  <script src="assets/main.js?v=21"></script>
+  <script>
+  (function () {
+    const R = SITE.rdv;
+    const $ = (id) => document.getElementById(id);
+    const MIN_DESC = 30;
+    const MAX_MO = 10;
+    const TRAVAUX = ["Carrosserie", "Peinture", "Mécanique", "Diagnostic", "Parallélisme / géométrie", "Contrôle technique", "Autre"];
+
+    $("ops").innerHTML = TRAVAUX.map((o, i) => `<label class="op"><input type="checkbox" name="ops" value="${o}" id="op${i}"><span>${o}</span></label>`).join("");
+    const ops = () => [...document.querySelectorAll("[name=ops]:checked")].map((c) => c.value);
+    const needsIns = () => ops().some((v) => v === "Carrosserie" || v === "Peinture");
+
+    // Plaque au format AB-123-CD
+    $("plaque").addEventListener("input", (e) => {
+      const v = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+      e.target.value = /^[A-Z]{2}\d{1,3}/.test(v) ? v.replace(/^([A-Z]{2})(\d{0,3})([A-Z]{0,2}).*/, (_, a, b, c) => [a, b, c].filter(Boolean).join("-")) : e.target.value.toUpperCase();
+    });
+
+    // Fichiers
+    function bindFile(input, box, nameEl, empty, max) {
+      input.addEventListener("change", () => {
+        let files = [...input.files];
+        const big = files.find((f) => f.size > MAX_MO * 1024 * 1024);
+        if (big) { alert(`« ${big.name} » dépasse ${MAX_MO} Mo. Merci de choisir un fichier plus léger.`); input.value = ""; files = []; }
+        if (files.length > max) { alert(`${max} fichiers maximum.`); input.value = ""; files = []; }
+        $(nameEl).textContent = files.length ? (files.length === 1 ? files[0].name : files.length + " photos sélectionnées") : empty;
+        $(box).classList.toggle("has", files.length > 0);
+        update();
+      });
+    }
+    bindFile($("cg"), "cg-box", "cg-name", "Ajouter la carte grise", 1);
+    bindFile($("photos"), "ph-box", "ph-name", "Ajouter des photos", 5);
+
+    const hasCG = () => $("cg").files.length === 1;
+
+    function data() {
+      return {
+        travaux: ops(), assurance: needsIns() ? (document.querySelector("[name=assurance]:checked") || {}).value || "" : "",
+        plaque: $("plaque").value.trim(), km: $("km").value.trim(), marque: $("marque").value, modele: $("modele").value.trim(),
+        description: $("desc").value.trim(),
+        nom: [$("prenom").value.trim(), $("nom").value.trim()].filter(Boolean).join(" "), email: $("email").value.trim(), tel: $("tel").value.trim(),
+      };
+    }
+
+    function update() {
+      const d = data();
+      $("ins").classList.toggle("show", needsIns());
+      const n = d.description.length;
+      $("counter").textContent = n >= MIN_DESC ? `${n} caractères ✓` : `${n} / ${MIN_DESC} caractères minimum`;
+      $("counter").classList.toggle("ok", n >= MIN_DESC);
+      // l'envoi reste bloqué tant que la carte grise n'est pas jointe
+      $("send").disabled = !hasCG();
+      $("lock").style.display = hasCG() ? "none" : "flex";
+      if (hasCG()) $("cg-field").classList.remove("err");
+      const row = (k, v) => `<dt>${k}</dt><dd class="${v ? "" : "empty"}">${v || "—"}</dd>`;
+      $("recap").innerHTML =
+        row("Travaux", d.travaux.join(", ") + (d.assurance ? " (" + d.assurance.toLowerCase() + ")" : "")) +
+        row("Véhicule", [d.marque, d.modele].filter(Boolean).join(" ") + (d.plaque ? " · " + d.plaque : "") + (d.km ? " · " + d.km + " km" : "")) +
+        row("Carte grise", hasCG() ? "Jointe ✓" : "") +
+        row("Photos", $("photos").files.length ? $("photos").files.length + " photo(s)" : "") +
+        row("Contact", [d.nom, d.email].filter(Boolean).join(" · "));
+    }
+    $("form").addEventListener("input", update);
+    $("form").addEventListener("change", update);
+
+    // Préremplissage depuis l'accueil (?op=Carrosserie&assurance=Sans assurance)
+    const q = new URLSearchParams(location.search);
+    if (q.get("op")) { const c = document.querySelector(`[name=ops][value="${q.get("op")}"]`); if (c) c.checked = true; }
+    if (q.get("assurance")) { const r = document.querySelector(`[name=assurance][value="${q.get("assurance")}"]`); if (r) r.checked = true; }
+
+    $("form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const d = data(), missing = [];
+      document.querySelectorAll(".f.err").forEach((x) => x.classList.remove("err"));
+      const need = (id, ok, label) => { if (!ok) { missing.push(label); const f = $(id).closest(".f"); if (f) f.classList.add("err"); } };
+      if (!d.travaux.length) missing.push("type de travaux");
+      need("plaque", d.plaque.length >= 5, "immatriculation");
+      need("km", /\d/.test(d.km), "kilométrage");
+      need("marque", d.marque, "marque");
+      need("modele", d.modele, "modèle");
+      need("cg", hasCG(), "carte grise");
+      need("desc", d.description.length >= MIN_DESC, `description (${MIN_DESC} caractères min.)`);
+      need("nom", d.nom, "nom");
+      need("email", /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email), "e-mail");
+      need("tel", d.tel.replace(/\D/g, "").length >= 10, "téléphone");
+      if (!$("rgpd").checked) missing.push("accord pour le traitement des données");
+      if (missing.length) { $("err").textContent = "À compléter : " + missing.join(", ") + "."; $("err").classList.add("show"); return; }
+      $("err").classList.remove("show");
+
+      const txt = `Demande de devis\n\nTravaux : ${d.travaux.join(", ")}${d.assurance ? "\nSinistre : " + d.assurance : ""}\n\nVéhicule : ${d.marque} ${d.modele}\nImmatriculation : ${d.plaque}\nKilométrage : ${d.km} km\n\nDescription :\n${d.description}\n\nClient : ${d.nom}\nE-mail : ${d.email}\nTéléphone : ${d.tel}`;
+
+      if (R.envoiUrl) {
+        // Envoi direct avec les pièces jointes (carte grise + photos)
+        const fd = new FormData();
+        Object.entries({ type: "Devis", ...d, travaux: d.travaux.join(", "), message: txt, _replyto: d.email }).forEach(([k, v]) => fd.append(k, v));
+        fd.append("carte_grise", $("cg").files[0]);
+        [...$("photos").files].forEach((f) => fd.append("photos", f));
+        try {
+          const r = await fetch(R.envoiUrl, { method: "POST", headers: { Accept: "application/json" }, body: fd });
+          if (!r.ok) throw new Error();
+        } catch {
+          $("err").textContent = "L'envoi n'a pas abouti. Merci de nous appeler au " + SITE.tel + ".";
+          $("err").classList.add("show"); return;
+        }
+        $("done-text").textContent = `Votre carte grise et votre demande nous sont bien parvenues. Nous vous envoyons le devis à ${d.email}.`;
+      } else {
+        // Sans service d'envoi : la messagerie du client s'ouvre, il doit y joindre ses fichiers
+        const pj = "\n\n---\nPIÈCES JOINTES À AJOUTER : carte grise" + ($("photos").files.length ? " + photos des dégâts" : "") + "\nSans copie de la carte grise, la demande de devis ne pourra pas être prise en considération.";
+        const avant = "⚠ JOINDRE LA COPIE DE LA CARTE GRISE À CET E-MAIL AVANT DE L'ENVOYER ⚠\n\n";
+        location.href = `mailto:${SITE.email}?subject=${encodeURIComponent("Demande de devis – " + d.plaque + " – " + d.travaux.join(", "))}&body=${encodeURIComponent(avant + txt + pj)}`;
+        $("done-title").textContent = "Dernière étape";
+        $("done-text").innerHTML = `Votre messagerie s'est ouverte avec la demande pré-remplie.<br><strong style="color:#000">Joignez-y la photo de votre carte grise</strong>${$("photos").files.length ? " et vos photos" : ""}, puis envoyez l'e-mail à ${SITE.email}.<br><br><strong style="color:#000">Sans carte grise jointe, votre demande ne pourra pas être prise en considération.</strong>`;
+      }
+      $("recap-box").style.display = "none";
+      $("done").classList.add("show");
+      $("done").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    update();
+  })();
+  </script>
+</body>
+</html>

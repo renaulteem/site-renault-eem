@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Véhicules d'occasion – Renault EEM, Noisy-le-Sec</title>
+  <meta name="description" content="Nos véhicules d'occasion à vendre à Noisy-le-Sec : Renault, Dacia, utilitaires. Contrôlés par notre atelier.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=21">
+</head>
+<body data-page="vo">
+  <div id="site-header"></div>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">Accueil</a> / Véhicules d'occasion</div>
+      <span class="eyebrow">Stock disponible</span>
+      <h1>Nos véhicules d'occasion</h1>
+      <p>Chaque véhicule est contrôlé et préparé par notre atelier. Un modèle vous intéresse ? Appelez-nous au <a data-tel href="#" style="font-weight:700;color:#000;border-bottom:2px solid #efdf00"><span data-num></span></a>.</p>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container">
+      <div class="vo-bar">
+        <span class="count" id="count"></span>
+        <div class="vo-filters">
+          <div class="field"><select id="f-cat" aria-label="Catégorie"></select></div>
+          <div class="field"><select id="f-carbu" aria-label="Énergie"></select></div>
+          <div class="field"><select id="sort" aria-label="Trier">
+            <option value="prix-asc">Prix croissant</option>
+            <option value="prix-desc">Prix décroissant</option>
+            <option value="km-asc">Kilométrage croissant</option>
+            <option value="annee-desc">Plus récents</option>
+          </select></div>
+        </div>
+      </div>
+      <div class="tiles vo-grid" id="cars"></div>
+    </div>
+  </section>
+
+  <!-- Fiche véhicule -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+    <div class="modal-box vo-sheet" id="sheet"></div>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/config.js?v=21"></script>
+  <script src="assets/main.js?v=21"></script>
+  <script>
+  (async function () {
+    // Stock lu depuis data/vehicules.json (géré dans l'espace /admin). Les véhicules "Vendu" sont masqués.
+    let V = [];
+    try {
+      const r = await fetch("data/vehicules.json", { cache: "no-store" });
+      V = ((await r.json()).vehicules || []).filter((v) => v.statut !== "Vendu" && v.photos && v.photos.length);
+    } catch { V = []; }
+    const $ = (id) => document.getElementById(id);
+    const eur = (n) => n.toLocaleString("fr-FR").replace(/ /g, " ") + " €";
+    const km = (n) => n.toLocaleString("fr-FR").replace(/ /g, " ") + " km";
+    const tel = "tel:" + SITE.tel.replace(/\s/g, "");
+    const ICO = {
+      cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+      km: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 18 4-6"/></svg>',
+      fuel: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v16M3 21h13M7 8h5"/><path d="M15 10h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V9l-3-3"/></svg>',
+      gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="5" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="12" cy="19" r="2"/><path d="M6 7v10M12 7v10M18 7v5H6"/></svg>',
+      check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5 9-10"/></svg>',
+    };
+
+    // Filtres (générés à partir du stock)
+    const opts = (key, label) => `<option value="">${label}</option>` + [...new Set(V.map((v) => v[key]))].sort().map((x) => `<option>${x}</option>`).join("");
+    $("f-cat").innerHTML = opts("categorie", "Toutes catégories");
+    $("f-carbu").innerHTML = opts("carburant", "Toutes énergies");
+
+    function render() {
+      const c = $("f-cat").value, f = $("f-carbu").value;
+      const [key, dir] = $("sort").value.split("-");
+      const list = V.filter((v) => (!c || v.categorie === c) && (!f || v.carburant === f))
+        .sort((a, b) => (dir === "asc" ? a[key] - b[key] : b[key] - a[key]));
+      $("count").textContent = list.length + (list.length > 1 ? " véhicules disponibles" : " véhicule disponible");
+      $("cars").innerHTML = list.length ? list.map((v) => `
+        <article class="tile vo-card" data-id="${v.ref}" tabindex="0" role="button" aria-label="Voir ${v.marque} ${v.modele}">
+          <div class="tile-img"><img src="${v.vignette || v.photos[0]}" alt="${v.marque} ${v.modele} ${v.version}" loading="lazy">
+            ${v.statut === "Réservé" ? `<span class="vo-tag reserved">Réservé</span>` : v.categorie ? `<span class="vo-tag">${v.categorie}</span>` : ""}
+            <span class="vo-count">${v.photos.length} photos</span></div>
+          <div class="tile-body">
+            <span class="eyebrow">${v.marque}</span>
+            <h3>${v.modele} <span class="ver">${v.version}</span></h3>
+            <ul class="vo-specs">
+              ${[[ICO.cal, v.annee], [ICO.km, v.km != null && km(v.km)], [ICO.fuel, v.carburant], [ICO.gear, v.boite]].filter(([, x]) => x).map(([i, x]) => `<li>${i}${x}</li>`).join("")}
+            </ul>
+            <div class="vo-foot"><span class="price">${eur(v.prix)}</span><span class="link-arrow">Voir le véhicule ${ICON.arrow}</span></div>
+          </div>
+        </article>`).join("")
+        : `<div class="empty"><strong>Aucun véhicule ne correspond à vos critères.</strong><br>Appelez-nous au ${SITE.tel} : nous pouvons rechercher le véhicule qu'il vous faut.</div>`;
+    }
+
+    // Fiche détaillée avec galerie
+    let cur = null, idx = 0;
+    function openCar(id) {
+      cur = V.find((x) => x.ref === id); idx = 0;
+      const v = cur;
+      $("sheet").innerHTML = `
+        <button class="modal-close" aria-label="Fermer">×</button>
+        <div class="gal">
+          <div class="gal-main">
+            <img id="g-img" alt="${v.marque} ${v.modele}">
+          </div>
+          <div class="gal-bar">
+            <button class="gal-nav prev" aria-label="Photo précédente">‹</button>
+            <span class="gal-count" id="g-count"></span>
+            <button class="gal-nav next" aria-label="Photo suivante">›</button>
+          </div>
+          <div class="gal-thumbs">${v.photos.map((p, i) => `<button data-i="${i}" aria-label="Photo ${i + 1}"><img src="${p}" alt="" loading="lazy"></button>`).join("")}</div>
+        </div>
+        <div class="sheet-info">
+          <span class="eyebrow">${v.marque} · ${v.categorie || "Occasion"}</span>
+          <h2 id="m-title">${v.modele}</h2>
+          <div class="ver">${v.version}</div>
+          <div class="price">${eur(v.prix)}</div>
+          <ul class="sheet-specs">
+            ${[["Année", v.annee], ["Kilométrage", v.km != null && km(v.km)], ["Carburant", v.carburant], ["Boîte", v.boite], ["Puissance", v.puissance], ["Couleur", v.couleur]]
+              .filter(([, x]) => x).map(([k, x]) => `<li><span>${k}</span><strong>${x}</strong></li>`).join("")}
+          </ul>
+          ${v.atouts && v.atouts.length ? `<div class="atouts-title">Points forts &amp; travaux réalisés</div><ul class="atouts">${v.atouts.map((a) => `<li>${ICO.check}${a}</li>`).join("")}</ul>` : ""}
+          <a class="btn btn-yellow" href="${tel}">${ICON.phone} Appeler · ${SITE.tel}</a>
+          <a class="btn btn-line" href="mailto:${SITE.email}?subject=${encodeURIComponent("Véhicule d'occasion – " + v.marque + " " + v.modele + " " + v.version + " (réf. " + v.ref + ")")}">Demander des informations</a>
+          <p class="note">Réf. ${v.ref}${v.statut === "Réservé" ? " · <strong>Réservé</strong>" : ""} · Essai et reprise possibles sur rendez-vous.</p>
+        </div>`;
+      show(0);
+      $("modal").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function show(i) {
+      const n = cur.photos.length;
+      idx = (i + n) % n;
+      $("g-img").src = cur.photos[idx];
+      $("g-count").textContent = `${idx + 1} / ${n}`;
+      document.querySelectorAll(".gal-thumbs button").forEach((b, j) => b.classList.toggle("on", j === idx));
+    }
+    const closeModal = () => { $("modal").classList.remove("open"); document.body.style.overflow = ""; };
+
+    $("sheet").addEventListener("click", (e) => {
+      if (e.target.closest(".modal-close")) return closeModal();
+      if (e.target.closest(".prev")) return show(idx - 1);
+      if (e.target.closest(".next")) return show(idx + 1);
+      const t = e.target.closest(".gal-thumbs button"); if (t) show(+t.dataset.i);
+    });
+    $("modal").addEventListener("click", (e) => { if (e.target.id === "modal") closeModal(); });
+    document.addEventListener("keydown", (e) => {
+      if (!$("modal").classList.contains("open")) return;
+      if (e.key === "Escape") closeModal();
+      if (e.key === "ArrowRight") show(idx + 1);
+      if (e.key === "ArrowLeft") show(idx - 1);
+    });
+    // glisser au doigt sur mobile
+    let x0 = null;
+    $("sheet").addEventListener("touchstart", (e) => { if (e.target.closest(".gal-main")) x0 = e.touches[0].clientX; }, { passive: true });
+    $("sheet").addEventListener("touchend", (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1)); x0 = null; });
+
+    ["f-cat", "f-carbu", "sort"].forEach((id) => $(id).addEventListener("change", render));
+    $("cars").addEventListener("click", (e) => { const c = e.target.closest(".vo-card"); if (c) openCar(c.dataset.id); });
+    $("cars").addEventListener("keydown", (e) => { const c = e.target.closest(".vo-card"); if (c && e.key === "Enter") openCar(c.dataset.id); });
+    render();
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+# Espace administrateur Renault EEM
+# Le site est stocké sur GitHub ; chaque enregistrement ici met le site à jour en ~1 minute.
+backend:
+  name: github
+  repo: A-REMPLIR/renault-eem   # ⚠️ à remplir lors de la mise en ligne (compte/dépôt GitHub)
+  branch: main
+
+site_url: https://www.renault-eem.fr   # ⚠️ à remplacer par le vrai nom de domaine
+logo_url: /photos/site/logo-renault.svg
+
+# Où sont rangées les photos envoyées depuis l'admin
+media_folder: photos/vo
+public_folder: /photos/vo
+
+collections:
+  - name: stock
+    label: Véhicules d'occasion
+    files:
+      - name: vehicules
+        label: Stock VO
+        file: data/vehicules.json
+        fields:
+          - name: vehicules
+            label: Véhicules
+            label_singular: véhicule
+            widget: list
+            summary: "{{ref}} · {{marque}} {{modele}} {{version}} · {{prix}} € · {{statut}}"
+            add_to_top: true
+            fields:
+              - { name: ref, label: Référence, widget: string, hint: "Ex : VO-003. Doit être unique." }
+              - name: statut
+                label: Statut
+                widget: select
+                options: ["En vente", "Réservé", "Vendu"]
+                default: "En vente"
+                hint: "« Vendu » retire le véhicule du site sans le supprimer."
+              - { name: marque, label: Marque, widget: select, options: ["Renault", "Dacia", "Alpine", "Mercedes", "Volkswagen", "Autre"], default: "Renault" }
+              - { name: modele, label: Modèle, widget: string, hint: "Ex : Clio IV" }
+              - { name: version, label: Version / motorisation, widget: string, hint: "Ex : 1.5 dCi 75" }
+              - { name: categorie, label: Catégorie, widget: select, options: ["Citadine", "Compacte", "SUV", "Familiale", "Utilitaire", "Électrique", "Collection"] }
+              - { name: annee, label: Année, widget: number, value_type: int, min: 1990, max: 2035, required: false }
+              - { name: km, label: Kilométrage (km), widget: number, value_type: int, min: 0 }
+              - { name: carburant, label: Carburant, widget: select, options: ["Essence", "Diesel", "Hybride", "Électrique", "GPL"] }
+              - { name: boite, label: Boîte de vitesses, widget: select, options: ["Manuelle", "Automatique"] }
+              - { name: puissance, label: Puissance, widget: string, hint: "Ex : 75 ch (4 CV)", required: false }
+              - { name: couleur, label: Couleur, widget: string, required: false }
+              - { name: prix, label: Prix (€), widget: number, value_type: int, min: 0 }
+              - name: atouts
+                label: Points forts & travaux réalisés
+                required: false
+                widget: list
+                max: 6
+                hint: "Ex : Embrayage neuf, Distribution faite, Pneus neufs, Contrôle technique OK"
+                field: { name: atout, label: Point fort, widget: string }
+              - { name: vignette, label: Vignette (aperçu de la liste), widget: image, required: false, hint: "Photo recadrée sur le véhicule, format paysage 4:3. Facultatif." }
+              - name: photos
+                label: Photos
+                widget: list
+                min: 1
+                hint: "La 1re photo sert de vignette si aucune vignette n'est fournie. Pensez à flouter les plaques."
+                field: { name: photo, label: Photo, widget: image }

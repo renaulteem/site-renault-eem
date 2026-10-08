@@ -1,0 +1,211 @@
+{
+  "vehicules": [
+    {
+      "ref": "VO-008",
+      "statut": "En vente",
+      "marque": "Renault",
+      "modele": "Clio V",
+      "version": "1.3 TCe 130",
+      "categorie": "Citadine",
+      "annee": 2020,
+      "km": 62000,
+      "carburant": "Essence",
+      "boite": "Automatique",
+      "puissance": "130 ch (7 CV)",
+      "couleur": "Marron",
+      "prix": 15990,
+      "atouts": [
+        "Apple CarPlay"
+      ],
+      "photos": [
+        "photos/vo/clio5-1.jpg",
+        "photos/vo/clio5-2.jpg",
+        "photos/vo/clio5-3.jpg"
+      ],
+      "vignette": "photos/vo/clio5-1-vignette.jpg"
+    },
+    {
+      "ref": "VO-007",
+      "statut": "En vente",
+      "marque": "Volkswagen",
+      "modele": "Touran",
+      "version": "1.9 TDI 105 DSG7",
+      "categorie": "Familiale",
+      "annee": 2007,
+      "km": 200000,
+      "carburant": "Diesel",
+      "boite": "Automatique",
+      "puissance": "105 ch (7 CV)",
+      "couleur": "Noir",
+      "prix": 7000,
+      "atouts": [
+        "Embrayage neuf",
+        "Boîte de vitesses neuve",
+        "4 pneus neufs"
+      ],
+      "photos": [
+        "photos/vo/touran-1.jpg"
+      ],
+      "vignette": "photos/vo/touran-1-vignette.jpg"
+    },
+    {
+      "ref": "VO-006",
+      "statut": "En vente",
+      "marque": "Renault",
+      "modele": "Super 5",
+      "version": "1.7 Baccara GTX Saga",
+      "categorie": "Citadine",
+      "annee": 1987,
+      "km": 85000,
+      "carburant": "Essence",
+      "boite": "Manuelle",
+      "puissance": "95 ch (7 CV)",
+      "couleur": "Bleu foncé",
+      "prix": 4990,
+      "atouts": [
+        "Voiture de collection appréciée",
+        "Bon état général",
+        "Idéale pour passionnés et youngtimer"
+      ],
+      "photos": [
+        "photos/vo/super5-1.jpg",
+        "photos/vo/super5-2.jpg",
+        "photos/vo/super5-3.jpg"
+      ],
+      "vignette": "photos/vo/super5-1-vignette.jpg"
+    },
+    {
+      "ref": "VO-005",
+      "statut": "En vente",
+      "marque": "Mercedes",
+      "modele": "Classe V Marco Polo",
+      "version": "(W447) 250 2.2 CDI 237 4Matic 9G-Tronic",
+      "categorie": "Familiale",
+      "annee": null,
+      "km": 75000,
+      "carburant": "Diesel",
+      "boite": "Automatique",
+      "puissance": "",
+      "couleur": "Gris foncé",
+      "prix": 41990,
+      "atouts": [
+        "4Matic",
+        "Bon état général",
+        "Idéal pour les voyages"
+      ],
+      "photos": [
+        "photos/vo/vclasse-1.jpg",
+        "photos/vo/vclasse-2.jpg",
+        "photos/vo/vclasse-3.jpg",
+        "photos/vo/vclasse-4.jpg",
+        "photos/vo/vclasse-5.jpg"
+      ],
+      "vignette": "photos/vo/vclasse-1-vignette.jpg"
+    },
+    {
+      "ref": "VO-004",
+      "statut": "En vente",
+      "marque": "Renault",
+      "modele": "Twingo II",
+      "version": "Phase 2 · 1.2 75 ch Eco",
+      "categorie": "Citadine",
+      "annee": 2013,
+      "km": 66000,
+      "carburant": "Essence",
+      "boite": "Manuelle",
+      "puissance": "75 ch",
+      "couleur": "Blanc",
+      "prix": 4790,
+      "atouts": [
+        "Entretien régulier",
+        "Bon état général",
+        "Prête à rouler"
+      ],
+      "photos": [
+        "photos/vo/twingo-b-1.jpg",
+        "photos/vo/twingo-b-2.jpg",
+        "photos/vo/twingo-b-3.jpg",
+        "photos/vo/twingo-b-4.jpg",
+        "photos/vo/twingo-b-5.jpg",
+        "photos/vo/twingo-b-6.jpg"
+      ],
+      "vignette": "photos/vo/twingo-b-1-vignette.jpg"
+    },
+    {
+      "ref": "VO-003",
+      "statut": "En vente",
+      "marque": "Renault",
+      "modele": "Twingo II",
+      "version": "Phase 2 · 1.5 dCi 75 eco²",
+      "categorie": "Citadine",
+      "annee": 2013,
+      "km": 178602,
+      "carburant": "Diesel",
+      "boite": "Manuelle",
+      "puissance": "75 ch",
+      "couleur": "Jaune",
+      "prix": 4790,
+      "atouts": [],
+      "photos": [
+        "photos/vo/twingo-1.jpg",
+        "photos/vo/twingo-2.jpg",
+        "photos/vo/twingo-3.jpg",
+        "photos/vo/twingo-4.jpg",
+        "photos/vo/twingo-5.jpg"
+      ],
+      "vignette": "photos/vo/twingo-1-vignette.jpg"
+    },
+    {
+      "ref": "VO-001",
+      "statut": "En vente",
+      "marque": "Renault",
+      "modele": "Kangoo II",
+      "version": "1.2 TCe 115",
+      "categorie": "Utilitaire",
+      "annee": 2019,
+      "km": 102000,
+      "carburant": "Essence",
+      "boite": "Manuelle",
+      "puissance": "114 ch (7 CV)",
+      "couleur": "Blanc",
+      "prix": 10990,
+      "atouts": [
+        "Embrayage neuf"
+      ],
+      "photos": [
+        "photos/vo/kangoo-1.jpg",
+        "photos/vo/kangoo-2.jpg",
+        "photos/vo/kangoo-3.jpg",
+        "photos/vo/kangoo-4.jpg",
+        "photos/vo/kangoo-5.jpg",
+        "photos/vo/kangoo-6.jpg"
+      ],
+      "vignette": "photos/vo/kangoo-1-vignette.jpg"
+    },
+    {
+      "ref": "VO-002",
+      "statut": "En vente",
+      "marque": "Renault",
+      "modele": "Clio IV",
+      "version": "1.5 dCi 75",
+      "categorie": "Citadine",
+      "annee": 2019,
+      "km": 81000,
+      "carburant": "Diesel",
+      "boite": "Manuelle",
+      "puissance": "75 ch (4 CV)",
+      "couleur": "Blanc",
+      "prix": 8990,
+      "atouts": [],
+      "photos": [
+        "photos/vo/clio-1.jpg",
+        "photos/vo/clio-2.jpg",
+        "photos/vo/clio-3.jpg",
+        "photos/vo/clio-4.jpg",
+        "photos/vo/clio-5.jpg",
+        "photos/vo/clio-6.jpg"
+      ],
+      "vignette": "photos/vo/clio-1-vignette.jpg"
+    }
+  ]
+}
