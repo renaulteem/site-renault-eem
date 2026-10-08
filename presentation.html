@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=29">
+  <link rel="stylesheet" href="assets/style.css?v=30">
 </head>
 <body data-page="apropos">
   <div id="site-header"></div>
@@ -62,8 +62,8 @@
 
   <div id="site-footer"></div>
 
-  <script src="assets/config.js?v=29"></script>
-  <script src="assets/main.js?v=29"></script>
+  <script src="assets/config.js?v=30"></script>
+  <script src="assets/main.js?v=30"></script>
   <script>
   (async function () {
     // Contenu modifiable depuis l'espace /admin (fichier data/apropos.json)
@@ -80,12 +80,14 @@
     const track = $("a-track"), dots = $("a-dots");
     if (!photos.length) $("a-slides").remove();
     else {
-      track.innerHTML = photos.map((p, i) => `
+      // en haut : la 1re photo (façade) + éventuellement les photos à partir de la 3e
+      const top = [photos[0], ...photos.slice(2)];
+      track.innerHTML = top.map((p, i) => `
         <figure class="ab-slide${i ? "" : " on"}">
           <img class="bg" src="${esc(p)}" alt="" aria-hidden="true">
-          <img class="fg" src="${esc(p)}" alt="Renault Gambetta" data-i="${i}" ${i ? 'loading="lazy"' : ""}>
+          <img class="fg" src="${esc(p)}" alt="Renault Gambetta" data-i="${i ? i + 1 : 0}" ${i ? 'loading="lazy"' : ""}>
         </figure>`).join("");
-      dots.innerHTML = photos.map((_, i) => `<button aria-label="Photo ${i + 1}" class="${i ? "" : "on"}"></button>`).join("");
+      dots.innerHTML = top.map((_, i) => `<button aria-label="Photo ${i + 1}" class="${i ? "" : "on"}"></button>`).join("");
       const slides = [...track.children];
       let cur = 0, timer;
       const go = (i) => {

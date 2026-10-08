@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=29">
+  <link rel="stylesheet" href="assets/style.css?v=30">
 </head>
 <body data-page="devis">
   <div id="site-header"></div>
@@ -32,13 +32,18 @@
         <div>
           <!-- 1. Travaux -->
           <div class="step">
-            <div class="step-head"><span class="step-num">1</span><h2>Type de travaux</h2></div>
+            <div class="step-head"><span class="step-num">1</span><h2>Votre demande</h2></div>
+            <div class="f"><label>Type de travaux *</label></div>
             <div class="ops" id="ops"></div>
+            <button type="button" class="ops-more" id="ops-more">Modifier le type de travaux</button>
             <div class="ins-choice" id="ins">
               <label><input type="radio" name="assurance" value="Avec assurance"> Avec assurance</label>
               <label><input type="radio" name="assurance" value="Sans assurance"> Sans assurance</label>
               <label><input type="radio" name="assurance" value="Je ne sais pas encore"> Je ne sais pas encore</label>
             </div>
+            <div class="f" id="desc-field" style="margin-top:20px"><label for="desc">Description de mon problème *</label>
+              <textarea id="desc" rows="6" placeholder="Décrivez le plus précisément possible. Ex : choc à l'arrière gauche, pare-chocs fendu et feu cassé… / Bruit au freinage côté avant droit depuis 2 semaines…"></textarea>
+              <div class="counter" id="counter"></div></div>
           </div>
 
           <!-- 2. Véhicule -->
@@ -57,11 +62,8 @@
 
           <!-- 3. Description -->
           <div class="step">
-            <div class="step-head"><span class="step-num">3</span><h2>Description de la demande</h2></div>
-            <div class="f" id="desc-field"><label for="desc">Décrivez le plus précisément possible *</label>
-              <textarea id="desc" rows="6" placeholder="Ex : choc à l'arrière gauche, pare-chocs fendu et feu cassé, rayure sur la portière arrière… / Bruit au freinage côté avant droit depuis 2 semaines…"></textarea>
-              <div class="counter" id="counter"></div></div>
-            <div class="f" style="margin-top:16px"><label>Photos <em>(facultatif, jusqu'à 5 — vivement conseillé pour la carrosserie)</em></label>
+            <div class="step-head"><span class="step-num">3</span><h2>Photos</h2></div>
+            <div class="f"><label>Photos <em>(facultatif, jusqu'à 5 — vivement conseillé pour la carrosserie)</em></label>
               <label class="upload" id="ph-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="14"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg><div class="txt"><strong id="ph-name">Ajouter des photos</strong><span>Vue d'ensemble + gros plans des dégâts</span></div><input type="file" id="photos" accept="image/*" multiple></label></div>
           </div>
 
@@ -171,7 +173,19 @@
 
     // Préremplissage depuis l'accueil (?op=Carrosserie&assurance=Sans assurance)
     const q = new URLSearchParams(location.search);
-    if (q.get("op")) { const c = document.querySelector(`[name=ops][value="${q.get("op")}"]`); if (c) c.checked = true; }
+    // arrivée depuis une prestation : seul le type de travaux choisi est proposé
+    if (q.get("op")) {
+      const c = document.querySelector(`[name=ops][value="${q.get("op")}"]`);
+      if (c) {
+        c.checked = true;
+        document.querySelectorAll("#ops .op").forEach((l) => { if (!l.contains(c)) l.hidden = true; });
+        $("ops-more").style.display = "inline-block";
+      }
+    }
+    $("ops-more").addEventListener("click", () => {
+      document.querySelectorAll("#ops .op").forEach((l) => (l.hidden = false));
+      $("ops-more").style.display = "none";
+    });
     if (q.get("assurance")) { const r = document.querySelector(`[name=assurance][value="${q.get("assurance")}"]`); if (r) r.checked = true; }
 
     $("form").addEventListener("submit", async (e) => {
