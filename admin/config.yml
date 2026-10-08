@@ -2,7 +2,7 @@
 # Le site est stocké sur GitHub ; chaque enregistrement ici met le site à jour en ~1 minute.
 backend:
   name: github
-  repo: A-REMPLIR/renault-eem   # ⚠️ à remplir lors de la mise en ligne (compte/dépôt GitHub)
+  repo: renaulteem/site-renault-eem
   branch: main
 
 site_url: https://www.renault-eem.fr   # ⚠️ à remplacer par le vrai nom de domaine
