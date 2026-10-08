@@ -59,3 +59,31 @@ collections:
                 min: 1
                 hint: "La 1re photo sert de vignette si aucune vignette n'est fournie. Pensez à flouter les plaques."
                 field: { name: photo, label: Photo, widget: image }
+
+  - name: pages
+    label: Pages du site
+    files:
+      - name: apropos
+        label: Nous connaître
+        file: data/apropos.json
+        media_folder: /photos/site
+        public_folder: /photos/site
+        fields:
+          - { name: titre, label: Titre, widget: string }
+          - { name: intro, label: Phrase d'introduction, widget: text }
+          - name: chiffres
+            label: Chiffres clés (3 conseillés)
+            widget: list
+            max: 4
+            fields:
+              - { name: valeur, label: "Valeur (ex : 2013, 25 ans, 6)", widget: string }
+              - { name: libelle, label: "Texte (ex : Création du garage)", widget: string }
+          - { name: histoire, label: "Notre histoire (laisser une ligne vide entre deux paragraphes)", widget: text }
+          - name: valeurs
+            label: Nos engagements
+            widget: list
+            field: { name: valeur, label: Engagement, widget: string }
+          - name: photos
+            label: "Photos du garage (la 1re est la grande photo)"
+            widget: list
+            field: { name: photo, label: Photo, widget: image }

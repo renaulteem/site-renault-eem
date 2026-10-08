@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nous connaître – Renault Gambetta, Noisy-le-Sec</title>
+  <meta name="description" content="Renault Gambetta, agent Renault et garage multimarque au 17-21 boulevard Gambetta à Noisy-le-Sec : notre histoire, notre équipe, notre atelier.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=24">
+</head>
+<body data-page="apropos">
+  <div id="site-header"></div>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">Accueil</a> / Nous connaître</div>
+      <span class="eyebrow">Nous connaître</span>
+      <h1 id="a-titre"></h1>
+      <p id="a-intro"></p>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container">
+      <div class="tiles about-figures" id="a-chiffres"></div>
+
+      <div class="tiles about-main">
+        <div class="tile about-photo" id="a-photo1"></div>
+        <div class="tile"><div class="tile-body about-text">
+          <span class="eyebrow">Notre histoire</span>
+          <div id="a-histoire"></div>
+          <ul class="about-values" id="a-valeurs"></ul>
+          <a class="btn btn-yellow" data-tel href="#" style="align-self:flex-start;margin-top:8px">Nous appeler · <span data-num></span></a>
+        </div></div>
+      </div>
+
+      <div class="tiles about-gallery" id="a-galerie"></div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/config.js?v=24"></script>
+  <script src="assets/main.js?v=24"></script>
+  <script>
+  (async function () {
+    // Contenu modifiable depuis l'espace /admin (fichier data/apropos.json)
+    let A = {};
+    try { A = await (await fetch("data/apropos.json", { cache: "no-store" })).json(); } catch {}
+    const $ = (id) => document.getElementById(id);
+    const esc = (t) => String(t || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    $("a-titre").textContent = A.titre || "Nous connaître";
+    $("a-intro").textContent = A.intro || "";
+    $("a-chiffres").innerHTML = (A.chiffres || []).map((c) => `<div class="tile"><div class="tile-body"><strong>${esc(c.valeur)}</strong><span>${esc(c.libelle)}</span></div></div>`).join("");
+    $("a-histoire").innerHTML = String(A.histoire || "").split(/\n\s*\n/).filter(Boolean).map((p) => `<p>${esc(p).replace(/\n/g, "<br>")}</p>`).join("");
+    $("a-valeurs").innerHTML = (A.valeurs || []).map((v) => `<li>${esc(v)}</li>`).join("");
+    const photos = A.photos || [];
+    if (photos[0]) $("a-photo1").innerHTML = `<img src="${esc(photos[0])}" alt="Le garage Renault Gambetta à Noisy-le-Sec">`;
+    else $("a-photo1").remove();
+    $("a-galerie").innerHTML = photos.slice(1).map((p) => `<div class="tile"><img src="${esc(p)}" alt="Renault Gambetta" loading="lazy"></div>`).join("");
+    if (photos.length < 2) $("a-galerie").remove();
+  })();
+  </script>
+</body>
+</html>

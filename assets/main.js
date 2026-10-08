@@ -27,6 +27,7 @@
     <nav class="nav" id="nav">
       <a href="index.html" class="${page === "home" ? "active" : ""}">Accueil</a>
       <a href="vo.html" class="${page === "vo" ? "active" : ""}">Véhicules d'occasion</a>
+      <a href="nous-connaitre.html" class="${page === "apropos" ? "active" : ""}">Nous connaître</a>
       <a href="${S.lienRenault}" target="_blank" rel="noopener" class="ext">Véhicules neufs ${ICON.ext}</a>
       <a href="${S.lienContrat}" target="_blank" rel="noopener" class="ext">Contrat d'entretien ${ICON.ext}</a>
       <a class="btn btn-yellow header-cta" href="${tel}">${ICON.phone} ${S.tel}</a>
