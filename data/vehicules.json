@@ -89,8 +89,7 @@
       "couleur": "Gris foncé",
       "prix": 41990,
       "atouts": [
-        "Bon état général",
-        "Idéal pour les voyages"
+        "Apple CarPlay"
       ],
       "photos": [
         "photos/vo/vclasse-1.jpg",
@@ -99,7 +98,8 @@
         "photos/vo/vclasse-4.jpg",
         "photos/vo/vclasse-5.jpg"
       ],
-      "vignette": "photos/vo/vclasse-1-vignette.jpg"
+      "vignette": "photos/vo/vclasse-1-vignette.jpg",
+      "prixAvant": 43490
     },
     {
       "ref": "VO-004",
@@ -167,9 +167,10 @@
       "boite": "Manuelle",
       "puissance": "114 ch (7 CV)",
       "couleur": "Blanc",
-      "prix": 10990,
+      "prix": 10490,
       "atouts": [
-        "Embrayage neuf"
+        "Embrayage neuf",
+        "R-Link"
       ],
       "photos": [
         "photos/vo/kangoo-1.jpg",
@@ -179,7 +180,8 @@
         "photos/vo/kangoo-5.jpg",
         "photos/vo/kangoo-6.jpg"
       ],
-      "vignette": "photos/vo/kangoo-1-vignette.jpg"
+      "vignette": "photos/vo/kangoo-1-vignette.jpg",
+      "prixAvant": 10990
     },
     {
       "ref": "VO-002",
@@ -195,7 +197,10 @@
       "puissance": "75 ch (4 CV)",
       "couleur": "Blanc",
       "prix": 8990,
-      "atouts": [],
+      "atouts": [
+        "Embrayage neuf",
+        "Bluetooth"
+      ],
       "photos": [
         "photos/vo/clio-1.jpg",
         "photos/vo/clio-2.jpg",

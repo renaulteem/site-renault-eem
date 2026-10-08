@@ -15,12 +15,12 @@ navigateur (ordinateur **et** mobile) avant de dire qu'une modification est fait
 
 - Site statique HTML/CSS/JS, sans framework ni build. Pages : `index.html` (accueil,
   carrousel 3D, Atelier & services, contact), `vo.html` (occasions), `devis.html`,
-  `nous-connaitre.html`, `mentions-legales.html`.
+  `presentation.html`, `mentions-legales.html`.
 - `assets/config.js` : téléphone, adresse, horaires, liens, photos du site.
 - `assets/main.js` : en-tête, menu et pied de page communs. `assets/hero3d.js` : carrousel.
 - `assets/style.css` : tout le style. Après une modif CSS/JS, augmenter le numéro `?v=` dans
   les balises des pages HTML, sinon les navigateurs gardent l'ancienne version.
-- `data/vehicules.json` : stock VO. `data/apropos.json` : contenu de « Nous connaître ».
+- `data/vehicules.json` : stock VO. `data/apropos.json` : contenu de la page « Présentation ».
   Ces deux fichiers sont aussi modifiés par le garagiste via `/admin` (Sveltia CMS,
   config dans `admin/config.yml`) : toujours faire `git pull` avant de les modifier.
 - `photos/site/` : photos du site. `photos/vo/` : photos des véhicules.
@@ -32,7 +32,7 @@ navigateur (ordinateur **et** mobile) avant de dire qu'une modification est fait
   En bas de page : « EEM » seulement. « SAS E.E.M » complet uniquement dans les mentions légales.
 - Style clair inspiré de renault.fr : fond blanc, tuiles gris clair et jaune Renault
   (#efdf00) séparées par une fine bande blanche, angles droits. Pas de fond noir.
-- Menu : Accueil · Véhicules d'occasion · Nous connaître · Véhicules neufs (lien renault.fr)
+- Menu : Accueil · Présentation · Véhicules d'occasion · Véhicules neufs (lien renault.fr)
   · Contrat d'entretien (lien renault.fr) · bouton téléphone.
 - Pas de prise de RDV en ligne (supprimée) : rendez-vous par téléphone uniquement.
 - Devis : formulaire `devis.html` qui ouvre la messagerie du client (gratuit, pas de

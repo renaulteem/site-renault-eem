@@ -15,17 +15,17 @@
       "libelle": "Toutes marques entretenues et réparées"
     }
   ],
-  "histoire": "Le texte de présentation du garage sera ajouté ici : son histoire, son équipe et ce qui vous distingue.",
+  "histoire": "Installé au 17-21 boulevard Gambetta à Noisy-le-Sec, notre garage est agent du réseau Renault depuis la création de la société E.E.M en 2013. Nous y accueillons les conducteurs de Renault et de Dacia, mais aussi de toutes les autres marques.\n\nNotre équipe d'une dizaine de professionnels expérimentés réalise toutes les opérations sur votre véhicule : entretien et révision, mécanique, diagnostic électronique, carrosserie, peinture, parallélisme et géométrie, pneumatiques et préparation au contrôle technique.\n\nEn tant qu'agent Renault, nous travaillons avec les méthodes, les outils de diagnostic et les pièces d'origine du constructeur. Chaque intervention commence par un devis clair, et nous vous expliquons simplement ce qui doit être fait sur votre véhicule.",
   "valeurs": [
-    "Pièces d'origine et savoir-faire Renault",
-    "Devis clair avant toute intervention",
+    "Méthodes, outils et pièces d'origine Renault",
+    "Toutes marques : entretien, mécanique, carrosserie, peinture",
+    "Un devis clair avant toute intervention",
     "Un interlocuteur unique pour votre véhicule"
   ],
   "photos": [
     "photos/site/garage-eem-1.jpg",
     "photos/site/garage-eem-6.jpg",
     "photos/site/garage-eem-4.jpg",
-    "photos/site/garage-eem-2.jpg",
-    "photos/site/garage-eem-5.jpg"
+    "photos/site/garage-eem-2.jpg"
   ]
 }

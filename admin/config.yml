@@ -45,6 +45,7 @@ collections:
               - { name: puissance, label: Puissance, widget: string, hint: "Ex : 75 ch (4 CV)", required: false }
               - { name: couleur, label: Couleur, widget: string, required: false }
               - { name: prix, label: Prix (€), widget: number, value_type: int, min: 0 }
+              - { name: prixAvant, label: "Prix avant réduction (€) – facultatif", widget: number, value_type: int, min: 0, required: false, hint: "Remplir seulement en cas de réduction : l'ancien prix est barré et la remise affichée." }
               - name: atouts
                 label: Points forts & travaux réalisés
                 required: false
@@ -64,7 +65,7 @@ collections:
     label: Pages du site
     files:
       - name: apropos
-        label: Nous connaître
+        label: Présentation
         file: data/apropos.json
         media_folder: /photos/site
         public_folder: /photos/site

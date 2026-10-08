@@ -300,12 +300,20 @@ a.tile:hover .tile-img img, .tile:hover .tile-img img { transform: scale(1.04); 
 .vo-bar .count { font-weight: 700; }
 .vo-filters { display: flex; gap: 8px; flex-wrap: wrap; }
 .vo-filters .field { margin: 0; min-width: 190px; }
-.vo-grid { grid-template-columns: repeat(3, 1fr); }
+.vo-grid { grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .vo-card { cursor: pointer; }
 .vo-card .tile-img { position: relative; background: #ececec; }
 .vo-card .tile-img { aspect-ratio: 4 / 3; }
 .vo-card .tile-img img { object-fit: cover; object-position: center; }
 .vo-tag { position: absolute; left: 0; top: 14px; background: var(--yellow); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 6px 12px; }
+.vo-promo { position: absolute; right: 0; top: 14px; background: #d6001c; color: var(--white); font-size: .78rem; font-weight: 800; padding: 6px 12px; letter-spacing: .02em; }
+.vo-atouts { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px !important; flex: 0 !important; }
+.vo-atouts li { display: flex; align-items: center; gap: 6px; background: var(--white); padding: 6px 10px !important; font-size: .82rem; font-weight: 600; }
+.vo-atouts li::before { display: none; }
+.vo-atouts svg { width: 14px; height: 14px; flex: none; }
+.price .old { display: block; font-family: var(--font); font-size: .85rem; font-weight: 500; color: var(--muted); }
+.price.promo .now { color: #d6001c; }
+.sheet-promo { font-size: .85rem; font-weight: 700; color: #d6001c; margin: -8px 0 16px; }
 .vo-tag.reserved { background: var(--black); color: var(--white); }
 .vo-count { position: absolute; right: 12px; bottom: 12px; background: rgba(255,255,255,.92); font-size: .74rem; font-weight: 700; padding: 4px 9px; }
 .vo-card .eyebrow { display: block; margin-bottom: 4px; }
@@ -318,8 +326,8 @@ a.tile:hover .tile-img img, .tile:hover .tile-img img { transform: scale(1.04); 
 .vo-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: auto; }
 .price { font-family: var(--font-title); font-weight: 800; font-size: 1.6rem; }
 .empty { padding: 60px 20px; text-align: center; background: var(--tile); grid-column: 1 / -1; }
-@media (max-width: 1000px) { .vo-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 640px) { .vo-grid { grid-template-columns: 1fr; } .vo-filters, .vo-filters .field { width: 100%; min-width: 0; } }
+@media (max-width: 1000px) { .vo-grid { grid-template-columns: 1fr 1fr; gap: 20px; } }
+@media (max-width: 640px) { .vo-grid { grid-template-columns: 1fr; gap: 18px; } .vo-filters, .vo-filters .field { width: 100%; min-width: 0; } }
 
 /* fiche véhicule */
 .vo-sheet { max-width: 1120px; grid-template-columns: 1.45fr 1fr; }
@@ -480,3 +488,5 @@ a.tile:hover .tile-img img, .tile:hover .tile-img img { transform: scale(1.04); 
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .slide { transition: none; } html { scroll-behavior: auto; } }
 
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sheet-info .price.promo .now { color: var(--black); }
+.sheet-info .price .old { color: #4a4a00; margin-bottom: 2px; }
