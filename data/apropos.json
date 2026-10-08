@@ -7,12 +7,12 @@
       "libelle": "Création de la société"
     },
     {
-      "valeur": "Agent",
-      "libelle": "Réseau Renault · Dacia"
+      "valeur": "Agent Renault Dacia",
+      "libelle": ""
     },
     {
-      "valeur": "Toutes",
-      "libelle": "marques entretenues"
+      "valeur": "Toutes marques",
+      "libelle": "entretenues"
     }
   ],
   "histoire": "Le texte de présentation du garage sera ajouté ici : son histoire, son équipe et ce qui vous distingue.",
