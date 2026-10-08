@@ -45,7 +45,7 @@
       <li><a href="mailto:${S.email}">${S.email}</a></li>
       <li><a href="${S.lienMaps}" target="_blank" rel="noopener">Itinéraire</a></li>
     </ul></div>
-    <div class="legal"><span>© ${new Date().getFullYear()} ${S.raisonSociale} · <a href="#">Mentions légales</a> · <a href="#">Confidentialité</a></span><span>${window.CREDITS}</span></div>
+    <div class="legal"><span>© ${new Date().getFullYear()} ${S.raisonSociale} · <a href="mentions-legales.html">Mentions légales</a> · <a href="mentions-legales.html#confidentialite">Confidentialité</a></span><span>${window.CREDITS}</span></div>
   </div></footer>
   <a class="btn btn-yellow fab" href="${tel}">${ICON.phone} Appeler · ${S.tel}</a>`;
 
