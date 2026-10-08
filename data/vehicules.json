@@ -79,7 +79,7 @@
       "statut": "En vente",
       "marque": "Mercedes",
       "modele": "Classe V Marco Polo",
-      "version": "(W447) 250 2.2 CDI 237 4Matic 9G-Tronic",
+      "version": "250d 9G-Tronic",
       "categorie": "Familiale",
       "annee": 2021,
       "km": 75000,
@@ -89,7 +89,6 @@
       "couleur": "Gris foncé",
       "prix": 41990,
       "atouts": [
-        "4Matic",
         "Bon état général",
         "Idéal pour les voyages"
       ],
