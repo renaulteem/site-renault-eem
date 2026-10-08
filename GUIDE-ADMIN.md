@@ -1,9 +1,9 @@
-# Renault EEM — Guide administrateur
+# Renault Gambetta — Guide administrateur
 
 ## Ajouter / modifier un véhicule d'occasion
 
-1. Aller sur **www.votre-site.fr/admin** (ordinateur, tablette ou téléphone).
-2. Se connecter (compte GitHub du garage — voir « Mise en ligne »).
+1. Aller sur **renaultgambetta.com/admin** (ordinateur, tablette ou téléphone).
+2. Se connecter avec le jeton GitHub (« Sign in with Token »).
 3. Ouvrir **Véhicules d'occasion › Stock VO**.
 4. **Ajouter un véhicule** : remplir la fiche (référence, marque, modèle, version,
    catégorie, année, km, carburant, boîte, puissance, couleur, prix, atouts)
