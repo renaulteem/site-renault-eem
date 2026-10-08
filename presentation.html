@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=33">
+  <link rel="stylesheet" href="assets/style.css?v=34">
 </head>
 <body data-page="apropos">
   <div id="site-header"></div>
@@ -28,10 +28,17 @@
   <!-- Photo de couverture + chiffres clés -->
   <section class="ab-cover-wrap">
     <div class="container">
-      <div class="ab-strip-wrap reveal" id="a-slides">
-        <div class="ab-strip" id="a-track" tabindex="0" aria-label="Photos du garage"></div>
-        <button class="ab-sl-nav prev" id="a-prev" aria-label="Photos précédentes">‹</button>
-        <button class="ab-sl-nav next" id="a-next" aria-label="Photos suivantes">›</button>
+      <div class="ab-show reveal" id="a-slides" aria-roledescription="diaporama" aria-label="Photos du garage">
+        <div class="ab-show-media" id="a-track"></div>
+        <div class="ab-show-panel">
+          <span class="ab-show-count" id="a-count"></span>
+          <div class="ab-show-caption" id="a-caption" aria-live="polite"></div>
+          <div class="ab-show-ctrl">
+            <button class="ab-sl-nav" id="a-prev" aria-label="Photo précédente">‹</button>
+            <button class="ab-sl-nav" id="a-next" aria-label="Photo suivante">›</button>
+            <div class="ab-show-bar"><span id="a-bar"></span></div>
+          </div>
+        </div>
       </div>
       <div class="ab-facts reveal" id="a-chiffres"></div>
     </div>
@@ -75,33 +82,38 @@
     $("a-titre").textContent = A.titre || "Présentation";
     $("a-intro").textContent = A.intro || "";
 
-    // bande de photos : chaque photo en entier, à la même hauteur, côte à côte
+    // diaporama : photo entière à gauche, légende à droite
     const track = $("a-track");
-    if (!photos.length) $("a-slides").remove();
+    const items = photos.map((p) => (typeof p === "string" ? { photo: p } : p));
+    const src = (i) => items[i] && items[i].photo;
+    if (!items.length) $("a-slides").remove();
     else {
-      track.innerHTML = photos.map((p, i) => `<figure class="ab-shot"><img src="${esc(p)}" alt="Renault Gambetta, Noisy-le-Sec" data-i="${i}"></figure>`).join("");
-      const shots = () => [...track.children];
-      const step = (dir) => {
-        const x = track.scrollLeft, items = shots();
-        if (dir > 0) {
-          if (x + track.clientWidth >= track.scrollWidth - 4) return track.scrollTo({ left: 0, behavior: "smooth" });
-          const nxt = items.find((f) => f.offsetLeft > x + 4);
-          if (nxt) track.scrollTo({ left: nxt.offsetLeft, behavior: "smooth" });
-        } else {
-          if (x <= 4) return track.scrollTo({ left: track.scrollWidth, behavior: "smooth" });
-          const prv = items.filter((f) => f.offsetLeft < x - 4).pop();
-          track.scrollTo({ left: prv ? prv.offsetLeft : 0, behavior: "smooth" });
-        }
+      track.innerHTML = items.map((it, i) => `<img class="ab-show-img${i ? "" : " on"}" src="${esc(it.photo)}" alt="${esc(it.titre || "Renault Gambetta")}" data-i="${i}">`).join("");
+      const imgs = [...track.children];
+      let cur = 0, timer;
+      const pad = (n) => String(n).padStart(2, "0");
+      const render = () => {
+        const it = items[cur];
+        $("a-count").textContent = `${pad(cur + 1)} / ${pad(items.length)}`;
+        $("a-caption").classList.remove("in");
+        setTimeout(() => {
+          $("a-caption").innerHTML = `${it.titre ? `<h3>${esc(it.titre)}</h3>` : ""}${it.texte ? `<p>${esc(it.texte)}</p>` : ""}`;
+          $("a-caption").classList.add("in");
+        }, 150);
+        const bar = $("a-bar"); bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
       };
-      let timer;
-      const auto = () => { clearInterval(timer); if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => step(1), 4500); };
-      $("a-prev").onclick = () => { step(-1); auto(); };
-      $("a-next").onclick = () => { step(1); auto(); };
-      $("a-slides").addEventListener("mouseenter", () => clearInterval(timer));
-      $("a-slides").addEventListener("mouseleave", auto);
-      track.addEventListener("touchstart", () => clearInterval(timer), { passive: true });
-      track.addEventListener("keydown", (e) => { if (e.key === "ArrowRight") step(1); if (e.key === "ArrowLeft") step(-1); });
-      auto();
+      const go = (i) => { imgs[cur].classList.remove("on"); cur = (i + imgs.length) % imgs.length; imgs[cur].classList.add("on"); render(); };
+      const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const auto = () => { clearInterval(timer); if (!calm) timer = setInterval(() => go(cur + 1), 6000); };
+      $("a-prev").onclick = () => { go(cur - 1); auto(); };
+      $("a-next").onclick = () => { go(cur + 1); auto(); };
+      $("a-slides").addEventListener("mouseenter", () => { clearInterval(timer); $("a-slides").classList.add("paused"); });
+      $("a-slides").addEventListener("mouseleave", () => { $("a-slides").classList.remove("paused"); auto(); });
+      let x0 = null;
+      track.addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
+      track.addEventListener("touchend", (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) { go(cur + (dx < 0 ? 1 : -1)); auto(); } x0 = null; });
+      if (items.length < 2) $("a-slides").querySelector(".ab-show-ctrl").remove();
+      render(); auto();
     }
 
     // chiffres clés : libellé au-dessus, valeur en grand
@@ -114,7 +126,7 @@
     // histoire
     $("a-histoire").innerHTML = String(A.histoire || "").split(/\n\s*\n/).filter(Boolean).map((p) => `<p>${esc(p).replace(/\n/g, "<br>")}</p>`).join("");
     $("a-valeurs").innerHTML = (A.valeurs || []).map((v) => `<li>${esc(v)}</li>`).join("");
-    if (photos[1]) $("a-photo2").innerHTML = `<img src="${esc(photos[1])}" alt="Renault Gambetta" loading="lazy" data-i="1">`;
+    if (photos[1]) $("a-photo2").innerHTML = `<img src="${esc(src(1))}" alt="Renault Gambetta" loading="lazy" data-i="1">`;
     else $("a-photo2").remove();
 
     // apparition au défilement (le contenu est ajouté après le chargement)
@@ -124,7 +136,7 @@
     // agrandissement au clic
     const lb = $("a-lightbox"), lbImg = $("a-lb-img");
     let cur = 0;
-    const show = (i) => { cur = (i + photos.length) % photos.length; lbImg.src = photos[cur]; };
+    const show = (i) => { cur = (i + items.length) % items.length; lbImg.src = src(cur); };
     const close = () => { lb.classList.remove("open"); document.body.style.overflow = ""; };
     document.addEventListener("click", (e) => {
       const img = e.target.closest("img[data-i]");

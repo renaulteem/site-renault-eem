@@ -180,15 +180,23 @@ a.tile:hover .tile-img img, .tile:hover .tile-img img { transform: scale(1.04); 
 .ab-hero { padding-bottom: 32px; }
 .ab-hero p { max-width: 720px; }
 .ab-cover-wrap { padding-bottom: 8px; }
-.ab-strip-wrap { position: relative; }
-.ab-strip { display: flex; gap: var(--gap); height: clamp(340px, 58vh, 540px); overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; outline: none; }
-.ab-strip::-webkit-scrollbar { display: none; }
-.ab-shot { margin: 0; flex: none; height: 100%; scroll-snap-align: start; overflow: hidden; background: var(--tile); }
-.ab-shot img { height: 100%; width: auto; display: block; cursor: zoom-in; transition: transform .8s cubic-bezier(.2,.8,.2,1); }
-.ab-shot:hover img { transform: scale(1.03); }
-.ab-sl-nav { position: absolute; z-index: 3; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; background: var(--white); font-size: 1.6rem; line-height: 1; box-shadow: 0 10px 24px -8px rgba(0,0,0,.45); }
-.ab-sl-nav:hover { background: var(--yellow); }
-.ab-sl-nav.prev { left: 14px; } .ab-sl-nav.next { right: 14px; }
+.ab-show { display: grid; grid-template-columns: 1fr 340px; gap: var(--gap); }
+.ab-show-media { position: relative; height: clamp(360px, 60vh, 580px); background: var(--white); overflow: hidden; cursor: zoom-in; }
+.ab-show-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transform: scale(1.015); transition: opacity .8s ease, transform 1.2s cubic-bezier(.2,.8,.2,1); }
+.ab-show-img.on { opacity: 1; transform: none; }
+.ab-show-panel { background: var(--tile); padding: 36px 32px 30px; display: flex; flex-direction: column; border-top: 4px solid var(--yellow); }
+.ab-show-count { font-family: var(--font-title); font-weight: 800; font-size: .95rem; letter-spacing: .08em; color: var(--muted); }
+.ab-show-caption { margin: auto 0; padding: 24px 0; opacity: 0; transform: translateY(10px); transition: opacity .45s, transform .55s cubic-bezier(.2,.8,.2,1); }
+.ab-show-caption.in { opacity: 1; transform: none; }
+.ab-show-caption h3 { font-size: clamp(1.6rem, 2.4vw, 2.1rem); margin-bottom: 12px; }
+.ab-show-caption p { color: var(--muted); font-size: 1rem; line-height: 1.6; }
+.ab-show-ctrl { display: flex; align-items: center; gap: 10px; }
+.ab-sl-nav { width: 46px; height: 46px; border-radius: 50%; background: var(--white); font-size: 1.5rem; line-height: 1; border: 1px solid var(--line); transition: background .2s; flex: none; }
+.ab-sl-nav:hover { background: var(--yellow); border-color: var(--yellow); }
+.ab-show-bar { flex: 1; height: 3px; background: rgba(0,0,0,.1); margin-left: 8px; overflow: hidden; }
+.ab-show-bar span { display: block; height: 100%; background: var(--black); transform-origin: left; animation: abbar 6s linear forwards; }
+.ab-show.paused .ab-show-bar span { animation-play-state: paused; }
+@keyframes abbar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .ab-facts { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); background: var(--tile); margin: var(--gap) 0 0; border-top: 4px solid var(--yellow); }
 .ab-fact { padding: 30px 32px 28px; display: flex; flex-direction: column; justify-content: center; gap: 6px; min-height: 128px; }
 .ab-fact + .ab-fact { border-left: 1px solid var(--line); }
@@ -222,11 +230,15 @@ a.tile:hover .tile-img img, .tile:hover .tile-img img { transform: scale(1.04); 
 .ab-lb-nav:hover, .ab-lb-close:hover { background: var(--yellow); }
 .ab-lb-nav.prev { left: 14px; } .ab-lb-nav.next { right: 14px; }
 @media (max-width: 960px) {
+  .ab-show { grid-template-columns: 1fr 280px; }
   .ab-story { grid-template-columns: 1fr; gap: 32px; }
   .ab-fact { padding: 22px 20px; min-height: 0; }
 }
 @media (max-width: 700px) {
-  .ab-strip { height: calc((100vw - 32px) * 9 / 16); }
+  .ab-show { grid-template-columns: 1fr; }
+  .ab-show-media { height: calc((100vw - 32px) * 3 / 4); }
+  .ab-show-panel { padding: 22px 20px; }
+  .ab-show-caption { padding: 14px 0 18px; }
   .ab-sl-nav { width: 38px; height: 38px; }
   .ab-facts { grid-template-columns: 1fr; }
   .ab-fact + .ab-fact { border-left: 0; border-top: 1px solid var(--line); }
