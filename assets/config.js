@@ -1,12 +1,12 @@
 /* =========================================================
-   CONFIGURATION DU SITE — RENAULT EEM
+   CONFIGURATION DU SITE — RENAULT GAMBETTA
    C'est le SEUL fichier à modifier pour mettre à jour :
    coordonnées, horaires, photos et véhicules d'occasion.
    ========================================================= */
 
 window.SITE = {
-  nom: "Renault EEM",
-  raisonSociale: "SAS EEM",
+  nom: "Renault Gambetta",
+  raisonSociale: "EEM",
   sousTitre: "Agent Renault · Multimarque",
 
   tel: "01 48 48 29 48",
